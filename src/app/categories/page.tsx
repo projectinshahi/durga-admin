@@ -30,7 +30,7 @@ export default function CategoriesPage() {
 
     const fetchCategories = async () => {
       try {
-        const res = await api.get('/categories');
+        const res = await api.get('/api/categories');
         if (isMounted) setCategories(res.data);
       } catch (err) {
         if (isMounted) toast.error("Failed to load categories");
@@ -66,10 +66,10 @@ export default function CategoriesPage() {
     e.preventDefault();
     try {
       if (modalMode === "add") {
-        await api.post('/categories', { name, order });
+        await api.post('/api/categories', { name, order });
         toast.success("Category created!");
       } else {
-        await api.put(`/categories/${editingId}`, { name, order });
+        await api.put(`/api/categories/${editingId}`, { name, order });
         toast.success("Category updated!");
       }
       setIsModalOpen(false);
@@ -83,7 +83,7 @@ export default function CategoriesPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Confirm deletion? Designs linked to this category may break.")) return;
     try {
-      await api.delete(`/categories/${id}`);
+      await api.delete(`/api/categories/${id}`);
       toast.success("Category deleted");
       setRefetchTrigger(prev => prev + 1);
     } catch (err) {
